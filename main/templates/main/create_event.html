@@ -1,0 +1,79 @@
+{% extends 'main/base.html' %}
+
+
+{% block content %}
+<div class="ui middle aligned center aligned grid">
+  <div class="column left aligned">
+    <h2 class="ui teal image header">
+      <div class="content">
+        Book Meeting with {{ username }}
+      </div>
+    </h2>
+    <form class="ui large form" method='post' formaction="{% url 'create_event' username=username id=id %}">
+      <div class="ui stacked segment">
+        {% csrf_token %}
+        <div class="field">
+          <label>First Name</label>
+          <input type="text" name="firstname" placeholder="First Name" required>
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+          <input type="text" name="lastname" placeholder="Last Name" required>
+        </div>
+        <div class="field">
+          <label>Email Id</label>
+          <input type="email" name="email" placeholder="Email Id" required>
+        </div>
+        <div class="field">
+          <label>Select Date</label>
+          <input id="date" type="text" value="Select Date Here" name="date" required/>
+        </div>
+
+        <div class="field">
+          <label>Select Time</label>
+          <input class="timepicker" name="time" required>
+        </div>
+
+        <div class="field">
+          <label>Purpose</label>
+          <input type="text" name="purpose" required>
+        </div>
+
+        <button class="ui button" type="submit">Submit</button>
+      </div>
+
+      <div class="ui error message"></div>
+
+    </form>
+
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+var disabledDates = "{{ disabledDates }}"
+$('#date').datepicker({
+    beforeShowDay: function(date){
+        var string = jQuery.datepicker.formatDate('yy-mm-dd', date);
+        return [ disabledDates.indexOf(string) == -1 ]
+    }
+});
+
+
+
+$('.timepicker').timepicker({
+    timeFormat: 'h:mm p',
+    interval: 30,
+    minTime: '10',
+    maxTime: '6:00pm',
+    defaultTime: '11',
+    startTime: '10:00',
+    dynamic: false,
+    dropdown: true,
+    scrollbar: true
+});
+
+
+{% endblock %}

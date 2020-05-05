@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<div class="ui middle aligned center aligned grid">
+  <div class="column">
+    <h2 class="ui teal image header">
+      <div class="content">
+        Your shareable link
+      </div>
+    </h2>
+    <div class="ui stacked segment">
+    <form class="ui large form">
+        <div class="field">
+          <input type="text" value="{{ request.user.permalink.url }}" readonly>
+        </div>
+    </form>
+    <br>
+    <a href="{% url 'index'%}">
+      <button class="ui button">Back</button>
+    </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
